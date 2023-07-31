@@ -1,6 +1,6 @@
-version = "0.0.7"
+version = "0.0.9"
 
-project.extra["PluginName"] = "Hoot Tempoross"
+project.extra["PluginName"] = "Hoot Tempoross fasha"
 project.extra["PluginDescription"] = "Completes Tempoross"
 
 tasks {

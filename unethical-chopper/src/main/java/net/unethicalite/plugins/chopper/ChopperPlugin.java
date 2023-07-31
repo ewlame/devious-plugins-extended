@@ -1,17 +1,21 @@
 package net.unethicalite.plugins.chopper;
 
 import com.google.inject.Provides;
+import kotlin.reflect.KProperty1;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.GameObject;
+import net.runelite.api.NpcID;
 import net.runelite.api.Tile;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.ConfigButtonClicked;
+import net.runelite.api.events.GameObjectSpawned;
 import net.runelite.api.events.GameTick;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.plugins.woodcutting.WoodcuttingPlugin;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
@@ -21,6 +25,8 @@ import net.unethicalite.api.movement.Reachable;
 import net.unethicalite.api.movement.pathfinder.GlobalCollisionMap;
 import net.unethicalite.api.plugins.LoopedPlugin;
 import net.unethicalite.api.scene.Tiles;
+import org.checkerframework.common.reflection.qual.GetConstructor;
+import org.checkerframework.common.reflection.qual.GetMethod;
 import org.pf4j.Extension;
 
 import javax.inject.Inject;
@@ -31,7 +37,7 @@ import java.util.stream.Collectors;
 
 @Extension
 @PluginDescriptor(
-		name = "Unethical Chopper",
+		name = "Unethical Chopperooni",
 		description = "Chops trees",
 		enabledByDefault = false
 )
@@ -46,6 +52,7 @@ public class ChopperPlugin extends LoopedPlugin
 
 	@Inject
 	private ChopperOverlay chopperOverlay;
+
 
 	@Inject
 	private GlobalCollisionMap collisionMap;
@@ -105,7 +112,6 @@ public class ChopperPlugin extends LoopedPlugin
 			&& TileObjects.getFirstAt(tile, a -> a instanceof GameObject) == null
 			&& !collisionMap.fullBlock(tile.getWorldLocation());
 	}
-
 	@Override
 	protected int loop()
 	{
@@ -119,7 +125,6 @@ public class ChopperPlugin extends LoopedPlugin
 		{
 			return -1;
 		}
-
 		var tree = TileObjects
 				.getSurrounding(startLocation, 8, config.tree().getNames())
 				.stream()
@@ -127,6 +132,31 @@ public class ChopperPlugin extends LoopedPlugin
 				.orElse(null);
 
 		var logs = Inventory.getFirst(x -> x.getName().toLowerCase(Locale.ROOT).contains("logs"));
+		var greenroots = TileObjects.getNearest(47483);
+		var normalroots = TileObjects.getNearest(47482);
+		if (greenroots == null && normalroots != null)
+		{
+			if (!local.isAnimating())
+			{
+				{
+					log.debug("Normal Roots");
+					normalroots.interact("Chop down");
+					return -1;
+
+				}
+			}
+		}
+		else
+		{
+			if (!local.isAnimating() && greenroots != null)
+			{
+				{
+					log.debug("Green Roots");
+					greenroots.interact("Chop down");
+					return -1;
+				}
+			}
+		}
 		if (config.makeFire())
 		{
 			var tinderbox = Inventory.getFirst("Tinderbox");
@@ -170,14 +200,6 @@ public class ChopperPlugin extends LoopedPlugin
 					tinderbox.useOn(logs);
 					return 500;
 				}
-			}
-		}
-		else
-		{
-			if (logs != null && !local.isAnimating())
-			{
-				logs.drop();
-				return 500;
 			}
 		}
 

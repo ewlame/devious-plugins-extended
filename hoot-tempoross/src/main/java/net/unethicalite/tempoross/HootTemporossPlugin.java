@@ -62,7 +62,7 @@ import static net.unethicalite.tempoross.TemporossID.OBJECT_LOBBY_PUMP;
 
 @Extension
 @PluginDescriptor(
-		name = "Hoot Tempoross",
+		name = "Hoot Tempoross meh ",
 		enabledByDefault = false
 )
 @Slf4j
@@ -428,6 +428,11 @@ public class HootTemporossPlugin extends LoopedPlugin
 				{
 					if (needToClearFire(ammoCrate))
 					{
+						List<NPC> firesBlockingPath = NPCs.getAll(x -> x.getId() == NPC_FIRE);
+						NPC fire = firesBlockingPath.stream()
+								.min(Comparator.comparing(x -> x.getWorldLocation().distanceTo(player.getWorldLocation())))
+								.orElse(null);
+						fire.interact("Douse");
 						return -2;
 					}
 
@@ -600,7 +605,9 @@ public class HootTemporossPlugin extends LoopedPlugin
 
 			if (bucketOfWaterCount > 0)
 			{
-				fire.interact("Douse");
+				//fire.interact("Douse");
+				Inventory.getFirst(ITEM_WATER_BUCKET).interact("Use");
+				fire.interact("Use");
 			}
 
 			return true;

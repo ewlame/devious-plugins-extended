@@ -71,5 +71,14 @@ allprojects {
         compileKotlin {
             kotlinOptions.jvmTarget = "11"
         }
+        withType<Jar> {
+            doLast {
+                copy {
+                    from("./build/libs/")
+                    into(System.getProperty("user.home") + "/.openosrs/plugins")
+                }
+            }
+        }
     }
 }
+

@@ -45,15 +45,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.BooleanSupplier;
 
-import static net.unethicalite.tempoross.TemporossID.ITEM_COOKED_FISH;
-import static net.unethicalite.tempoross.TemporossID.ITEM_RAW_FISH;
-import static net.unethicalite.tempoross.TemporossID.NPC_DOUBLE_FISH_SPOT;
-import static net.unethicalite.tempoross.TemporossID.NPC_FIRE;
-import static net.unethicalite.tempoross.TemporossID.NPC_VULN_WHIRLPOOL;
+import static net.unethicalite.tempoross.TemporossID.*;
 
 @Extension
 @PluginDescriptor(
-		name = "Unethical Tempoross",
+		name = "Unethical Tempoross Fix",
 		enabledByDefault = false
 )
 @Slf4j
@@ -144,8 +140,10 @@ public class TemporossPlugin extends TaskPlugin
 
 		public boolean isComplete(TemporossConfig config)
 		{
+			log.debug(isCook() + "is the cooking setting");
 			return isComplete.getAsBoolean() || (isCook() && !config.cook());
-		}
+
+        }
 	}
 
 	@Subscribe
@@ -202,6 +200,9 @@ public class TemporossPlugin extends TaskPlugin
 		if (fire != null)
 		{
 			fireToClear = fire;
+			if(Inventory.contains(ITEM_EMPTY_BUCKET))
+				Inventory.getFirst(ITEM_EMPTY_BUCKET).useOn(fire);
+				//use id 1929 (bucket of water) on fire
 		}
 
 		if (fireToClear != null && client.getCachedNPCs()[fireToClear.getIndex()] == null)
