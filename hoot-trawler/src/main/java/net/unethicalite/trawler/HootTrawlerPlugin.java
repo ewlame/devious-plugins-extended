@@ -72,7 +72,7 @@ public class HootTrawlerPlugin extends LoopedPlugin
 					rewardNet.interact("Inspect");
 					log.info("inspecting");
 					if(Dialog.isOpen() || player.isAnimating()){
-						log.info("no rewards available");
+						log.info("no rewards available, starting game");
 						TileObject gangplank = TileObjects.getFirstAt(entrancePoint, x -> x.hasAction("Cross"));
 						if (gangplank != null){
 							gangplank.interact("Cross");
@@ -91,12 +91,8 @@ public class HootTrawlerPlugin extends LoopedPlugin
 				}
 				//Time.sleepTicks(15);
 				if(bankAllWidget!=null){
-					log.info("widget: " + bankAllWidget.getName());
-					log.info("bank all screen visible");
 					bankAllWidget.interact("Bank-all");
 					System.out.println("Widget Actions: " + Arrays.toString(bankAllWidget.getActions()));
-					//bankAllWidget.interact(Arrays.toString(bankAllWidget.getActions()));
-					//WidgetPackets.widgetAction(bankAllWidget,"Bank-all");
 					log.info("Banked");
 					return -1;
 				}
@@ -141,12 +137,13 @@ public class HootTrawlerPlugin extends LoopedPlugin
 
 			return -1;
 		}
+		//wrecked.contains(player.getWorldLocation())
 		if(!TileObjects.within(wrecked, "Barrel").isEmpty()){
+			System.out.println("Failed, returning to dock");
 			TileObjects.getFirstAt(1950, 4827, 0, 2476).interact("Climb-on");
 			return -1;
 		}
 		if(!lobby.contains(player) && !player.isMoving() && !rewardZone.contains(player)) {
-			System.out.println("is player in world area lobbyz?: " + lobby.contains(player) + "is player moving? : " + player.isMoving() + "is player in reward zone?: " + rewardZone.contains(player));
 			System.out.println("not at dock, walking there now");
 			Movement.walkTo(rewardZone);
 			return -1;
