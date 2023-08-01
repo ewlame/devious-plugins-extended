@@ -1,72 +1,29 @@
 package net.unethicalite.trawler;
 
 import com.google.inject.Provides;
-import net.runelite.api.widgets.WidgetInfo;
+import net.runelite.api.*;
+import net.runelite.api.events.GameObjectSpawned;
 import net.unethicalite.api.entities.NPCs;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
-import net.unethicalite.api.items.DepositBox;
-import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.movement.Movement;
 import net.unethicalite.api.plugins.LoopedPlugin;
-import net.unethicalite.api.scene.Tiles;
 import net.unethicalite.api.widgets.Dialog;
 import net.unethicalite.api.widgets.Widgets;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.ChatMessageType;
-import net.runelite.api.Client;
-import net.runelite.api.GameObject;
-import net.runelite.api.Locatable;
-import net.runelite.api.NPC;
-import net.runelite.api.Player;
-import net.runelite.api.TileObject;
+
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.config.ConfigManager;
-import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDescriptor;
 import org.pf4j.Extension;
 
 import javax.inject.Inject;
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-import java.util.function.BooleanSupplier;
-import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import com.google.inject.Provides;
-import net.runelite.api.*;
-import net.runelite.api.Client;
-import net.runelite.api.widgets.Widget;
-import net.runelite.api.widgets.WidgetID;
 import net.unethicalite.api.commons.Time;
-import net.unethicalite.api.entities.NPCs;
-import net.unethicalite.api.entities.Players;
-import net.unethicalite.api.entities.TileObjects;
-import net.unethicalite.api.events.PacketSent;
-import net.unethicalite.api.packets.Packets;
-import net.unethicalite.api.packets.WidgetPackets;
-import net.unethicalite.api.plugins.LoopedPlugin;
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.coords.WorldArea;
-import net.runelite.api.coords.WorldPoint;
-import net.runelite.client.config.ConfigManager;
-import net.runelite.client.plugins.PluginDescriptor;
-import net.unethicalite.api.query.widgets.WidgetQuery;
-import net.unethicalite.api.widgets.Dialog;
-import net.unethicalite.api.widgets.Widgets;
-import org.pf4j.Extension;
-import net.runelite.client.config.ConfigManager;
-import net.runelite.client.eventbus.Subscribe;
-import net.runelite.client.plugins.PluginDescriptor;
-import net.unethicalite.api.items.DepositBox;
-import javax.inject.Inject;
+
 
 @PluginDescriptor(name = "Hoot Trawler", enabledByDefault = false)
 @Extension
@@ -78,16 +35,17 @@ public class HootTrawlerPlugin extends LoopedPlugin
 	private final WorldArea lobby = new WorldArea(2669, 3165, 5, 16, 1);
 
 	private final WorldArea rewardZone = new WorldArea(2664,3160,4,8,0);
-	private final WorldPoint entrancePoint = new WorldPoint(2675, 3170, 0);
 
 	private final WorldArea boatBottom = new WorldArea(1881, 4823, 18, 5, 0);
 	private final WorldArea boatBottom1 = new WorldArea(2011, 4823, 18, 5, 0);
 
 	private final WorldArea boatDeck = new WorldArea(1881, 4823, 18, 5, 1);
 	private final WorldArea boatDeck1 = new WorldArea(2011, 4823, 18, 5, 1);
+	private final WorldArea wrecked = new WorldArea(1953,4825,6,3,0);
 
 	private final WorldPoint boatLadderPoint = new WorldPoint(1884, 4826, 0);
 	private final WorldPoint boatLadderPoint1 = new WorldPoint(2012, 4826, 0);
+	private final WorldPoint entrancePoint = new WorldPoint(2675, 3170, 0);
 
 	//onChatMessage for empty net?
 	@Override
@@ -97,16 +55,15 @@ public class HootTrawlerPlugin extends LoopedPlugin
 		Player local = Players.getLocal();
 		Widget bankAllWidget;
 		boolean finished = false;
-
-		if(player.isMoving()){
-			log.info("player is moving, pls check back later");
+		/*if(player.isMoving()){
+			log.info("player is moving");
 			Time.sleepTick();
 			return -1;
-		}
+		}*/
 		//Widget deposit = Widgets.get(192,4);
 		//deposit.interact("Deposit inventory");
 		TileObject rewardNet = TileObjects.getNearest(x -> x.hasAction("Inspect"));
-		if(rewardNet!=null)
+		if(rewardNet!=null && rewardZone.contains(player))
 			finished = rewardZone.contains(rewardNet);
 		if(finished){
 			if(!player.isMoving()){
@@ -145,12 +102,8 @@ public class HootTrawlerPlugin extends LoopedPlugin
 				}
 				return -1;
 			}
-			System.out.println("here");
-			//return to reward zone?
 			return -1;
 		}
-
-
 		if (boatDeck.contains(local) || boatDeck1.contains(local))
 		{
 
@@ -186,6 +139,16 @@ public class HootTrawlerPlugin extends LoopedPlugin
 				return -1;
 			}
 
+			return -1;
+		}
+		if(!TileObjects.within(wrecked, "Barrel").isEmpty()){
+			TileObjects.getFirstAt(1950, 4827, 0, 2476).interact("Climb-on");
+			return -1;
+		}
+		if(!lobby.contains(player) && !player.isMoving() && !rewardZone.contains(player)) {
+			System.out.println("is player in world area lobbyz?: " + lobby.contains(player) + "is player moving? : " + player.isMoving() + "is player in reward zone?: " + rewardZone.contains(player));
+			System.out.println("not at dock, walking there now");
+			Movement.walkTo(rewardZone);
 			return -1;
 		}
 		return 1000;
