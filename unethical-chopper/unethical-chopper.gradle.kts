@@ -1,6 +1,6 @@
 version = "0.0.3"
 
-project.extra["PluginName"] = "Unethical Forestry"
+project.extra["PluginName"] = "Unethical Chopper"
 project.extra["PluginDescription"] = "Chops trees w/ forestry patch"
 
 tasks {
