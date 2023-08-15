@@ -7,16 +7,15 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.*;
-import net.unethicalite.api.game.GameThread;
 import net.unethicalite.api.input.Keyboard;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDescriptor;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import net.runelite.client.ui.overlay.OverlayManager;
-import net.unethicalite.api.account.LocalPlayer;
-import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.NPCs;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
@@ -26,20 +25,17 @@ import net.unethicalite.api.movement.Movement;
 import net.unethicalite.api.movement.Reachable;
 import net.unethicalite.api.movement.pathfinder.GlobalCollisionMap;
 import net.unethicalite.api.plugins.LoopedPlugin;
-import net.unethicalite.api.plugins.Plugins;
 import net.unethicalite.api.scene.Tiles;
 
-import net.unethicalite.api.widgets.Dialog;
 import net.unethicalite.api.widgets.Widgets;
 import net.unethicalite.client.Static;
 import org.pf4j.Extension;
-import org.pf4j.PluginState;
 
 import java.util.Random;
 import javax.inject.Inject;
 import java.util.*;
-import java.util.function.BooleanSupplier;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.lang.Integer.parseInt;
 import static net.unethicalite.plugins.chopper.ChopperID.*;
@@ -73,7 +69,7 @@ public class ChopperPlugin extends LoopedPlugin
 
 	@Inject
 	private Client client;
-	private final List<GameObject> saplingIngredients = new ArrayList<>(0);
+	private final List<Integer> saplingIngredients = new ArrayList<Integer>();
 	private final List<GameObject> correctOrder = new ArrayList<>(0);
 	private final GameObject[] saplingOrder = new GameObject[3];
 
@@ -130,57 +126,81 @@ public class ChopperPlugin extends LoopedPlugin
 		if(event.getGroup().contains("drop")){
 			config.drop();
 		}
-
 	}
-
-	protected boolean isEmptyTile(Tile tile)
-	{
-		return tile != null
-			&& TileObjects.getFirstAt(tile, a -> a instanceof GameObject) == null
-			&& !collisionMap.fullBlock(tile.getWorldLocation());
-	}
-
-	@Subscribe
-	private void onGameTick(GameTick e)
-	{
-		if (fmCooldown > 0)
-		{
-			fmCooldown--;
-		}
-		var local = Static.getClient().getLocalPlayer();
-		if(local==null){
-			return;
-		}
-        saplingIngredients.clear();
-		//System.out.println("locale player: " + LocalPlayer.get().getName());
-		var surroundingPlayers = Players.getAll();
+	public void floweringForest( List<Player> surroundingPlayers){
+		//var surroundingPlayers = Players.getAll();
 		for (Player surroundingPlayer : surroundingPlayers) {
-			if(surroundingPlayer.getAnimation()==AnimationID.LOOKING_INTO && !Inventory.isFull()) {
-				//System.out.println(surroundingPlayer.getName() + " interacting with: "
-				//+ surroundingPlayer.getInteracting());
-				var flower = (NPC) surroundingPlayer.getInteracting();
-				if (flower!=null && !activeFlowers.contains(flower)) {
-					System.out.println("Tracked flower {}" + flower);
-					activeFlowers.add(flower);
-					if (activeFlowers.size() == 2) {
-						if(!local.isMoving() && !Dialog.isOpen() && !local.isAnimating()){
-							for (NPC activeFlower : activeFlowers) {
-								var temp = activeFlowers.listIterator().next();
-								System.out.println("Interacting w/ :" + temp.getName());
-								temp.interact("Tend-to");
-							}
+			var flower = (NPC) surroundingPlayer.getInteracting();
+			if (flower != null && flower.getName().startsWith("Flowering") || flower != null && flower.getName().contains("bush")) {
+				System.out.println("flowering event started");
+				if (activeFlowers.size() < 2) {
+					if (!activeFlowers.contains(flower) && Players.getLocal().distanceTo(flower) <= config.radius()) {
+						System.out.println("adding: " + flower);
+						activeFlowers.add(flower);
+					}
+					if (activeFlowers.contains(flower) && Players.getLocal().distanceTo(flower) <= config.radius()) {
+						System.out.println("already contains: " + flower);
+						return;
+					}
+				}
+				if (activeFlowers.size() > 2 || activeFlowers.contains(null)) {
+					System.out.println("size over 2: " + activeFlowers.size() + " activeFlowers.contains(null): " + activeFlowers.contains(null));
+					activeFlowers.clear();
+				}
+				if (activeFlowers.size() == 2 && !activeFlowers.contains(null) && !Players.getLocal().isMoving()) {
+					for (int i = 0; i < activeFlowers.size(); i++) {
+						//System.out.println(local.getInteracting()!=activeFlower);
+						activeFlowers.get(i).interact("Tend-to");
+						//System.out.println(Players.getLocal().isMoving() + " : moving?");
+						System.out.print("currently attempting to interact with: " + activeFlowers.get(i).getName() + "\n ");
+						if (Players.getLocal().getInteracting() == activeFlowers.get(i)) {
+							System.out.println("interacting w/: " + activeFlowers.get(i).getName());
+							//continue;
 						}
-						System.out.println("Flowers reset");
+						if (activeFlowers.get(i).getName() == null) {
+							System.out.println("dat shit null");
+						}
+						if (activeFlowers.isEmpty()) {
+							System.out.println("empty");
+						}
+						//if (!local.isMoving() && !Dialog.isOpen() && local.getAnimation() != AnimationID.LOOKING_INTO) {
 						activeFlowers.clear();
 					}
+					return;
 				}
 			}
 		}
 
+	}
+	public void risingRoots(Player local){
+		var greenRoots = TileObjects.getNearest(GREEN_ROOTS);
+		var roots = TileObjects.getNearest(ROOTS);
+		//Anima-infused Tree roots
+		if (greenRoots != null && !Inventory.isFull() && greenRoots.distanceTo(local) < config.radius()) {
+			greenRoots.interact("Chop down");
+			//return -1;
+		}
+		if (greenRoots == null && roots != null && roots.distanceTo(local) < config.radius()) {
+			if (!local.isAnimating() && !local.isMoving()) {
+				System.out.println("Normal Roots");
+				roots.interact("Chop down");
+				//return -1;
+			}
+		}
+		//drop config true - dropping in progress, need to update to drop entire inv
+		if (Inventory.isFull() && config.drop()) {
+			Item junk = Inventory.getFirst(item -> item.getName().contains("logs"));
+			if (junk != null) {
+				junk.interact("Drop");
+				log.debug("Dropping junk");
+			}
+		}
+	}
+
+	public void bankRun(Player local){
 		//banks the logs, keeps required items listed in config
 		//need to add deposit from log basket as well, 2 ids for open and closed?
-		if (config.bank() && Inventory.isFull())
-		{
+		if (config.bank() && Inventory.isFull() && !local.isMoving()) {
 			TileObject bank = TileObjects.within(config.bankLocation().getArea().offset(2), obj -> obj.hasAction("Collect"))
 					.stream()
 					.min(Comparator.comparingInt(obj -> obj.distanceTo(Players.getLocal())))
@@ -189,11 +209,11 @@ public class ChopperPlugin extends LoopedPlugin
 					(!Objects.equals(item.getName(), config.requiredItems()))
 							&& item.getId() != ItemID.LOG_BASKET
 							&& item.getId() != ItemID.LOG_BRACE);
-			Widget bankPinWindow = Widgets.get(213,1);
+			Widget bankPinWindow = Widgets.get(213, 1);
 			var bankPinInChar = config.bankPin().toCharArray();
-			if(bankPinWindow!=null && parseInt(config.bankPin())!=0){
+			if (bankPinWindow != null && parseInt(config.bankPin()) != 0) {
 				for (int i = 0; i < bankPinInChar.length; i++) {
-					if(Objects.equals(Widgets.get(213, i+3).getText(), "?")){
+					if (Objects.equals(Widgets.get(213, i + 3).getText(), "?")) {
 						//System.out.println(bankPinInChar[i]);
 						Keyboard.type(bankPinInChar[i]);
 						return;
@@ -202,120 +222,102 @@ public class ChopperPlugin extends LoopedPlugin
 					//Time.sleepTick();
 				}
 			}
-			if(Bank.isOpen() && unneeded!=null){
-				if (!unneeded.isEmpty())
-				{
-					for (Item item : unneeded)
-					{
-						if(item!=null) {
+			if (Bank.isOpen() && unneeded != null) {
+				if (!unneeded.isEmpty()) {
+					for (Item item : unneeded) {
+						if (item != null) {
 							System.out.println(item.getName());
 							Bank.depositAll(item.getId());
 						}
 					}
-
 				}
 			}
-			if(Bank.isOpen() && unneeded ==null){
+			if (Bank.isOpen() && unneeded == null) {
 				Bank.close();
-			}
-			if (bank != null && bankPinWindow==null && !Bank.isOpen())
-			{
-				bank.interact("Bank", "Use");
-			}
-			NPC banker = NPCs.getNearest("Banker");
-			if (banker != null && bankPinWindow==null && !Bank.isOpen())
-			{
-				banker.interact("Bank");
 			}
 
 			Movement.walkTo(config.bankLocation());
-		}
-
-		var logs = Inventory.getFirst(x -> x.getName().toLowerCase(Locale.ROOT).contains("logs"));
-		var greenRoots = TileObjects.getNearest(GREEN_ROOTS);
-		var roots = TileObjects.getNearest(ROOTS);
-
-		//Anima-infused Tree roots
-		if(greenRoots !=null  && !Inventory.isFull() && greenRoots.distanceTo(local) < config.radius())
-		{
-			//System.out.println("interacting with: " + local.getInteracting().getName() + " ID: " + local.getInteracting().getId());
-				//System.out.println(Players.getLocal().getInteracting());
-				//System.out.println("Green Roots: " + greenRoots);
-				greenRoots.interact("Chop down");
-				//return -1;
-		}
-		if (greenRoots == null && roots != null && roots.distanceTo(local) < config.radius())
-		{
-			if (!local.isAnimating() && !local.isMoving())
-			{
-				System.out.println("Normal Roots");
-				roots.interact("Chop down");
-				//return -1;
+			if (bank != null && bankPinWindow == null && !Bank.isOpen() && !local.isMoving()) {
+				bank.interact("Bank", "Use");
 			}
-		}
-		//drop config true - dropping in progress, need to update to drop entire inv
-		if(Inventory.isFull() && config.drop()){
-			Item junk = Inventory.getFirst(item -> item.getName().contains("logs"));
-			if (junk != null)
-			{
-				junk.interact("Drop");
-				log.debug("Dropping junk");
+			NPC banker = NPCs.getNearest("Banker");
+			if (banker != null && bankPinWindow == null && !Bank.isOpen() && !local.isMoving() && bank == null) {
+				banker.interact("Bank");
 			}
-
-		}
-		//make fire broken atm
-		if (config.makeFire())
-		{
-			var tinderbox = Inventory.getFirst("Tinderbox");
-			if (logs != null && tinderbox != null)
-			{
-				var emptyTile = fireArea == null || fireArea.isEmpty() ? null : fireArea.stream()
-						.filter(t ->
-						{
-							Tile tile = Tiles.getAt(t.getWorldLocation());
-							return tile != null && isEmptyTile(tile);
-						})
-						.min(Comparator.comparingInt(wp -> wp.distanceTo(local)))
-						.orElse(null);
-
-				if (fireArea.isEmpty() || emptyTile == null)
-				{
-					fireArea = generateFireArea(3);
-					log.debug("Generating fire area");
-				}
-
-				if (emptyTile != null)
-				{
-					if (!emptyTile.getWorldLocation().equals(local.getWorldLocation()))
-					{
-
-						Movement.walk(emptyTile);
-					}
-
-					fmCooldown = 4;
-					tinderbox.useOn(logs);
-				}
-			}
-		}
-		var tree = TileObjects
-				.getSurrounding(startLocation, config.radius(), config.tree().getNames())
-				.stream()
-				.min(Comparator.comparing(x -> x.distanceTo(local.getWorldLocation())))
-				.orElse(null);
-		if (tree == null)
-		{
-			System.out.println("Could not find any trees");
-		}
-
-		if (!local.isMoving() && !local.isAnimating() && !Inventory.isFull() && tree!=null)
-		{
-            tree.interact("Chop down");
 		}
 	}
 
-	@Subscribe
-	public void onChatMessage(ChatMessage chatMessage)
-	{
+	public void cuttingTree(Player local){
+		var tree = TileObjects
+				.getSurrounding(startLocation, config.radius(), config.tree().getNames())
+				.stream()
+				.min(Comparator.comparing(x -> x.distanceTo(startLocation)))
+				.orElse(null);
+		if (tree == null) {
+			System.out.println("Could not find any trees");
+		}
+		if (!local.isMoving() && !Inventory.isFull() && tree != null) {
+			tree.interact("Chop down");
+		}
+	}
+protected boolean isEmptyTile(Tile tile)
+{
+	return tile != null
+			&& TileObjects.getFirstAt(tile, a -> a instanceof GameObject) == null
+			&& !collisionMap.fullBlock(tile.getWorldLocation());
+}
+
+@Subscribe
+private void onGameTick(GameTick e)
+{
+	if (fmCooldown > 0) {
+		fmCooldown--;
+	}
+	var local = Static.getClient().getLocalPlayer();
+	if(local==null){
+		return;
+	}
+	saplingIngredients.clear();
+	//check bank, then for forestry events, then last cut trees if nothing else going on
+	if(TileObjects.getNearest(STRUGGLING_SAPLING)!=null) {
+		System.out.println("sapling");
+	}
+	bankRun(local);
+	floweringForest(Players.getAll());
+	cuttingTree(local);
+	risingRoots(local);
+
+	var logs = Inventory.getFirst(x -> x.getName().toLowerCase(Locale.ROOT).contains("logs"));
+	//make fire broken atm
+	if (config.makeFire()) {
+		var tinderbox = Inventory.getFirst("Tinderbox");
+		if (logs != null && tinderbox != null) {
+			var emptyTile = fireArea == null || fireArea.isEmpty() ? null : fireArea.stream()
+					.filter(t ->
+					{
+						Tile tile = Tiles.getAt(t.getWorldLocation());
+						return tile != null && isEmptyTile(tile);
+					})
+					.min(Comparator.comparingInt(wp -> wp.distanceTo(local)))
+					.orElse(null);
+
+			if (fireArea.isEmpty() || emptyTile == null) {
+				fireArea = generateFireArea(3);
+				log.debug("Generating fire area");
+			}
+			if (emptyTile != null) {
+				if (!emptyTile.getWorldLocation().equals(local.getWorldLocation())) {
+					Movement.walk(emptyTile);
+				}
+				fmCooldown = 4;
+				tinderbox.useOn(logs);
+			}
+		}
+	}
+
+}
+@Subscribe
+public void onChatMessage (ChatMessage chatMessage)	{
 		ChatMessageType chatMessageType = chatMessage.getType();
 		MessageNode msg = chatMessage.getMessageNode();
 		if (msg.getValue().startsWith("The sapling seems to love")) {
@@ -324,7 +326,7 @@ public class ChopperPlugin extends LoopedPlugin
 			log.info(String.valueOf(ingredientNum));
 		}
 		/*
-		GameObject correctOrder [] = new GameObject[saplingIngredients.size()];
+		GameObject correctOrder [] = new GameObject[saplingIngredients.size()];ah.093
 		for(int i = 0; i < saplingIngredients.size();i++) {
 			if (correctOrder[i].getLocalLocation() != null) {
 				for(int x = 0; i < saplingIngredients.size(); x++) {
@@ -341,23 +343,22 @@ public class ChopperPlugin extends LoopedPlugin
 					log.info("Removing ingredient: " + saplingIngredients.get(i));
 					saplingIngredients.remove(i);
 					log.debug("Correct order: " + Arrays.stream(correctOrder).iterator().toString());
-				}
+				}ah.093
 			}
 		}
 		*/
 
-		//if ingredientFound start at ingredients[x]
+				//if ingredientFound start at ingredients[x]
 
 	}
-
 	@Subscribe
-	public void onAnimationChanged(final AnimationChanged event) {
-		var actor = event.getActor();
+	public void onAnimationChanged ( final AnimationChanged event){
+		/*var actor = event.getActor();
 		if (actor.getAnimation() == AnimationID.LOOKING_INTO && flowers.contains(actor.getInteracting())){
 			var flower = (NPC) actor.getInteracting();
 			if (!activeFlowers.contains(flower)) {
 				if (activeFlowers.size() == 2) {
-					log.debug("Flowers reset");
+					log.debug("Flowers reset");ah.093
 					activeFlowers.clear();
 				}
 
@@ -365,31 +366,33 @@ public class ChopperPlugin extends LoopedPlugin
 				activeFlowers.add(flower);
 			}
 		}
-
+		*/
 	}
 	@Provides
-	ChopperConfig provideConfig(ConfigManager configManager)
+	ChopperConfig provideConfig (ConfigManager configManager)
 	{
 		return configManager.getConfig(ChopperConfig.class);
 	}
 
-	private List<Tile> generateFireArea(int radius)
+	private List<Tile> generateFireArea ( int radius)
 	{
 		return Tiles.getSurrounding(Players.getLocal().getWorldLocation(), radius).stream()
 				.filter(tile -> tile != null
-					&& isEmptyTile(tile)
-					&& Reachable.isWalkable(tile.getWorldLocation()))
+						&& isEmptyTile(tile)
+						&& Reachable.isWalkable(tile.getWorldLocation()))
 				.collect(Collectors.toUnmodifiableList());
 	}
 	@Override
-	protected int loop()
-	{return 0;}
+	protected int loop ()
+	{
+		return 0;
+	}
 		/*
 		var local = Players.getLocal();
 		saplingIngredients.clear();
 		//System.out.println("locale player: " + LocalPlayer.get().getName());
 		var surroundingPlayers = Players.getAll();
-
+ah.093
         for (Player surroundingPlayer : surroundingPlayers) {
 			if(surroundingPlayer.getAnimation()==AnimationID.LOOKING_INTO && !Inventory.isFull()) {
 				//System.out.println(surroundingPlayer.getName() + " interacting with: "
@@ -424,7 +427,7 @@ public class ChopperPlugin extends LoopedPlugin
 
 			System.out.println("Tracked flower {}" + flower);
 			activeFlowers.add(flower);*/
-	//System.out.println("local player interacting, animation ID: " + Players.getLocal().getName());
+			//System.out.println("local player interacting, animation ID: " + Players.getLocal().getName());
 		/*System.out.println("interacting w/ : " + flowerPollinator.getInteracting().getName());
 		System.out.println("Animation of closest: " + flowerPollinator.getAnimation());
 		if(flowerPollinator.getAnimation()==AnimationID.WOODCUTTING_DRAGON){
@@ -474,7 +477,6 @@ public class ChopperPlugin extends LoopedPlugin
 						Bank.depositAll(item.getId());
 						Time.sleep(100);
 					}
-
 					return -1;
 				}
 			}
@@ -491,7 +493,7 @@ public class ChopperPlugin extends LoopedPlugin
 			NPC banker = NPCs.getNearest("Banker");
 			if (banker != null)
 			{
-				banker.interact("Bank");
+				banker.interact("Bank");ah.093
 				return -4;
 			}
 
@@ -508,7 +510,7 @@ public class ChopperPlugin extends LoopedPlugin
 				saplingIngredients.add((GameObject) TileObjects.getNearest(SPLINTERED_BARK));
 			if (TileObjects.getNearest(DROPPINGS) != null)
 				saplingIngredients.add((GameObject) TileObjects.getNearest(DROPPINGS));
-			if (TileObjects.getNearest(ROTTING_LEAVES) != null)
+			if (TileObjects.getNearest(ROTTING_LEAVES) != null)ah.093
 				saplingIngredients.add((GameObject) TileObjects.getNearest(ROTTING_LEAVES));
 			if (TileObjects.getNearest(WILD_MUSHROOMS) != null)
 				saplingIngredients.add((GameObject) TileObjects.getNearest(WILD_MUSHROOMS));
@@ -542,7 +544,7 @@ public class ChopperPlugin extends LoopedPlugin
 			}
 		}
 			/*
-			ChatMessageType chatMessageType = chatMessage.getType();
+			ChatMessageType chatMessageType = chatMessage.getType();ah.093
 		MessageNode msg = chatMessage.getMessageNode();
 		GameObject correctOrder [] = new GameObject[saplingIngredients.size()];
 		for(int i = 0; i < saplingIngredients.size();i++) {
@@ -559,7 +561,7 @@ public class ChopperPlugin extends LoopedPlugin
 						log.info(String.valueOf(ingredientNum));
 					}
 					log.info("Removing ingredient: " + saplingIngredients.get(i));
-					saplingIngredients.remove(i);
+					saplingIngredients.remove(i);ah.093
 					log.debug("Correct order: " + Arrays.stream(correctOrder).iterator().toString());
 
 			 */
@@ -576,7 +578,7 @@ public class ChopperPlugin extends LoopedPlugin
 			}
 			return -1;
 		}
-		if (greenRoots == null && roots != null && roots.distanceTo(local) < 15)
+		if (greenRoots == null && roots != null && roots.distanceTo(local) < 15)ah.093
 		{
 			if (!local.isAnimating())
 			{
@@ -593,7 +595,7 @@ public class ChopperPlugin extends LoopedPlugin
 			{
 				junk.interact("Drop");
 				log.debug("Dropping junk");
-				return -1;
+				return -1;ah.093
 			}
 
 		}
@@ -610,7 +612,7 @@ public class ChopperPlugin extends LoopedPlugin
 							return tile != null && isEmptyTile(tile);
 						})
 						.min(Comparator.comparingInt(wp -> wp.distanceTo(local)))
-						.orElse(null);
+						.orElse(null);ah.093
 
 				if (fireArea.isEmpty() || emptyTile == null)
 				{
@@ -627,7 +629,6 @@ public class ChopperPlugin extends LoopedPlugin
 						{
 							return 333;
 						}
-
 						Movement.walk(emptyTile);
 						return 1000;
 					}
@@ -644,7 +645,7 @@ public class ChopperPlugin extends LoopedPlugin
 			}
 		}
 
-		if (tree == null)
+		if (tree == null)ah.093
 		{
 			System.out.println("Could not find any trees");
 			return 1;
