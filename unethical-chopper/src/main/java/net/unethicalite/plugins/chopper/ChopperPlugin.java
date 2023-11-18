@@ -167,7 +167,7 @@ public class ChopperPlugin extends LoopedPlugin
 					}
 
 					fmCooldown = 4;
-					tinderbox.useOn(logs);
+					logs.useOn(tinderbox);
 					return 500;
 				}
 			}

@@ -136,7 +136,7 @@
   "id": "unethicalchopper-plugin",
   "releases": [{
     "date": "2023-11-18",
-    "sha512sum": "FC15810AE6B1D8AA44280D4B02B05338C7C31FB233D396765C0504A87B79F3DF16F1D94AB0A9D7B7107317EA6A34396E57009C162653FAAF6850830256E3FD78",
+    "sha512sum": "DD0C97DB609BA2485382FBF3D676A9B818B3115C41DC612A8E09021BEB2C5D0095898D011C4EAE72FA4D199AFDC89B2446041D36B483888E7493036E233993B2",
     "version": "0.0.3",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-chopper-0.0.3.jar?raw=true",
     "requires": "^1.0.0"
