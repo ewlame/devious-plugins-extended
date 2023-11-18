@@ -5,7 +5,6 @@ import com.google.inject.Provides;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
-import net.runelite.api.ModelID;
 import net.runelite.api.World;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.WidgetLoaded;
@@ -16,19 +15,16 @@ import net.runelite.client.events.PluginChanged;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.unethicalite.api.events.LobbyWorldSelectToggled;
-import net.unethicalite.api.events.LoginStateChanged;
+import net.unethicalite.api.events.LoginIndexChanged;
 import net.unethicalite.api.events.WorldHopped;
 import net.unethicalite.api.game.Game;
 import net.unethicalite.api.game.Worlds;
 import net.unethicalite.api.input.Keyboard;
 import net.unethicalite.api.input.Mouse;
-import net.unethicalite.api.script.blocking_events.LoginEvent;
 import net.unethicalite.api.script.blocking_events.WelcomeScreenEvent;
 import net.unethicalite.api.widgets.Widgets;
 import org.jboss.aerogear.security.otp.Totp;
 import org.pf4j.Extension;
-
-import java.awt.event.KeyEvent;
 
 @PluginDescriptor(name = "Unethical Auto Login", enabledByDefault = false)
 @Extension
@@ -60,7 +56,7 @@ public class UnethicalAutoLoginPlugin extends Plugin
 	}
 
 	@Subscribe
-	private void onLoginStateChanged(LoginStateChanged e)
+	private void onLoginIndexChanged(LoginIndexChanged e)
 	{
 		switch (e.getIndex())
 		{
@@ -72,7 +68,7 @@ public class UnethicalAutoLoginPlugin extends Plugin
 				break;
 			case 24:
 				prepareLogin();
-				client.getCallbacks().post(new LoginStateChanged(2));
+				client.getCallbacks().post(new LoginIndexChanged(2));
 				break;
 		}
 	}
@@ -136,7 +132,7 @@ public class UnethicalAutoLoginPlugin extends Plugin
 		if (e.isLoaded() && Game.getState() == GameState.LOGIN_SCREEN)
 		{
 			prepareLogin();
-			client.getCallbacks().post(new LoginStateChanged(2));
+			client.getCallbacks().post(new LoginIndexChanged(2));
 		}
 	}
 
@@ -156,10 +152,10 @@ public class UnethicalAutoLoginPlugin extends Plugin
 	{
 		client.setUsername(config.username());
 		client.setPassword(config.password());
-		System.out.println("working");
-		Keyboard.sendEnter();
-		//Mouse.click(299, 322, true);
+
+		Mouse.click(299, 322, true);
 	}
+
 	private void enterAuth()
 	{
 		client.setOtp(new Totp(config.auth()).now());

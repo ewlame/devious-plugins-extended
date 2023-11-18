@@ -290,7 +290,7 @@ private void onGameTick(GameTick e)
 	var logs = Inventory.getFirst(x -> x.getName().toLowerCase(Locale.ROOT).contains("logs"));
 	//make fire broken atm
 	if (config.makeFire()) {
-		var tinderbox = Inventory.getFirst("Tinderbox");
+		var tinderbox = Inventory.getFirst("Banker's note");
 		if (logs != null && tinderbox != null) {
 			var emptyTile = fireArea == null || fireArea.isEmpty() ? null : fireArea.stream()
 					.filter(t ->
@@ -310,7 +310,7 @@ private void onGameTick(GameTick e)
 					Movement.walk(emptyTile);
 				}
 				fmCooldown = 4;
-				tinderbox.useOn(logs);
+				logs.useOn(tinderbox);
 			}
 		}
 	}

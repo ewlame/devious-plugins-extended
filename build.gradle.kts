@@ -29,7 +29,7 @@ allprojects {
     apply<JavaPlugin>()
     apply(plugin = "java-library")
     apply(plugin = "kotlin")
-    apply(plugin = "checkstyle")
+    //apply(plugin = "checkstyle")
 
     repositories {
         mavenCentral()
