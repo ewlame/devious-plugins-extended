@@ -22,7 +22,7 @@ public interface ChopperConfig extends Config
     @ConfigItem(
             keyName = "makeFire",
             name = "Make fire",
-            description = "Make fire while chopping",
+            description = "Use logs on Banker's note",
             position = 1
     )
     default boolean makeFire()
