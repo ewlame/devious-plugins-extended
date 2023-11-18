@@ -13,6 +13,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
+import net.runelite.api.ItemID;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
@@ -126,11 +127,11 @@ public class ChopperPlugin extends LoopedPlugin
 				.min(Comparator.comparing(x -> x.distanceTo(local.getWorldLocation())))
 				.orElse(null);
 
-		var logs = Inventory.getFirst(x -> x.getName().toLowerCase(Locale.ROOT).contains("logs"));
+		var logs = Inventory.getFirst(ItemID.MAGIC_LOGS);
 		if (config.makeFire())
 		{
-			var tinderbox = Inventory.getFirst("Banker's note");
-			if (logs != null && tinderbox != null)
+			var bankersnote = Inventory.getFirst("Banker's note");
+			if (logs != null && bankersnote != null)
 			{
 				var emptyTile = fireArea == null || fireArea.isEmpty() ? null : fireArea.stream()
 						.filter(t ->
@@ -167,7 +168,7 @@ public class ChopperPlugin extends LoopedPlugin
 					}
 
 					fmCooldown = 4;
-					logs.useOn(tinderbox);
+					logs.useOn(bankersnote);
 					return 500;
 				}
 			}

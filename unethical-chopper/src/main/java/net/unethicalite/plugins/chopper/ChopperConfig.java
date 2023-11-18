@@ -21,7 +21,7 @@ public interface ChopperConfig extends Config
 
     @ConfigItem(
             keyName = "makeFire",
-            name = "Make fire",
+            name = "Banker's note",
             description = "Use logs on Banker's note",
             position = 1
     )

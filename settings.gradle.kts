@@ -25,13 +25,13 @@
 
 rootProject.name = "unethicalite-plugins"
 
-//include("hoot-blackjack")
+include("hoot-blackjack")
 include("hoot-trawler")
 //include("hoot-pickpocket")
-//include("hoot-aerialfishing")
+include("hoot-aerialfishing")
 //include("hoot-chins")
-//include("hoot-notifier")
-//include("hoot-karambwanfisher")
+include("hoot-notifier")
+include("hoot-karambwanfisher")
 
 include("hoot-tempoross")
 
@@ -54,6 +54,7 @@ include("unethical-logout")
 include("m-autoswitcher")
 include("m-powerfisher")
 include("m-wintertodt")
+include("OneClick")
 
 //include("example-kotlin")
 

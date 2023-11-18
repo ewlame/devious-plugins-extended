@@ -1,6 +1,58 @@
 [{
   "projectUrl": "",
   "provider": "melxin",
+  "name": "Hoot Aerial Fishing",
+  "description": "Trains fishing using aerial fishing",
+  "id": "hootaerialfishing-plugin",
+  "releases": [{
+    "date": "2023-11-18",
+    "sha512sum": "6CA84A275C668809B80F153D962CC6F4AF7CCA342C36E5EF9E4CB1328A42D2109085BC5E5F8949F2AB06228C1234583B79E3CC1C133B829DC735CCC3654B53E2",
+    "version": "0.0.5",
+    "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/hoot-aerialfishing-0.0.5.jar?raw=true",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "",
+  "provider": "melxin",
+  "name": "Hoot Blackjack",
+  "description": "Trains thieving using blackjacking",
+  "id": "hootblackjack-plugin",
+  "releases": [{
+    "date": "2023-11-18",
+    "sha512sum": "76724BCB4B816112BB038AB0D8D5F51D0D87CAC41D0E30A44828162D3E6AEE9C50429EF7AC273674AF38B1B2CEDED3E5953B428CA7608A90D2C44FDD23796F71",
+    "version": "0.0.6",
+    "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/hoot-blackjack-0.0.6.jar?raw=true",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "",
+  "provider": "melxin",
+  "name": "Hoot Karambwan Fisher",
+  "description": "Fishes karambwans",
+  "id": "hootkarambwanfisher-plugin",
+  "releases": [{
+    "date": "2023-11-18",
+    "sha512sum": "2FFB0C12A1668F6FDE2F01C2FF2B9F09ACD3F6D86E18D2BEA5F4CA1F5751CDCE42EA1143B3B7D411DD36A72F6B8AFF1422D24E73FCBC0BFD3960FE53EFA7A87C",
+    "version": "0.0.1",
+    "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/hoot-karambwanfisher-0.0.1.jar?raw=true",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "",
+  "provider": "melxin",
+  "name": "Hoot Notifier",
+  "description": "Notifies you for certain events in the game",
+  "id": "hootnotifier-plugin",
+  "releases": [{
+    "date": "2023-11-18",
+    "sha512sum": "1933256CB7368FC90ABCE7F6442AB82A2444568E0C9704B0B6168E6AF1B753E5F21662CC1BB4A623EAC73376AA70603A33268E117ED7B338BB63712DCFFF183C",
+    "version": "0.0.3",
+    "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/hoot-notifier-0.0.3.jar?raw=true",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "",
+  "provider": "melxin",
   "name": "Hoot Tempoross fasha",
   "description": "Completes Tempoross",
   "id": "hoottemporossfasha-plugin",
@@ -61,6 +113,19 @@
     "sha512sum": "10D1A9755453FCD0D6B73C5ED0E88B78A1270CA885D3CAC430EBBD8F97A60A4309A90613C8058A01F16DC7FBC01CBD47ED611322F17B7CFF7228E1F69011EED3",
     "version": "0.0.4",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/m-wintertodt-0.0.4.jar?raw=true",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "",
+  "provider": "melxin",
+  "name": "OneClick",
+  "description": "OP One Click methods.",
+  "id": "oneclick-plugin",
+  "releases": [{
+    "date": "2023-11-18",
+    "sha512sum": "C99A5CCC183B744B1434B9C1EA48F9135B0DEA1E4660F7E10C26B72972F2091BB277B467B1D3505AFD400A5EC2DBB40C312CDD2DA3824E69C1686266CE99D498",
+    "version": "9.1.0",
+    "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/OneClick-9.1.0.jar?raw=true",
     "requires": "^1.0.0"
   }]
 }, {
@@ -136,7 +201,7 @@
   "id": "unethicalchopper-plugin",
   "releases": [{
     "date": "2023-11-18",
-    "sha512sum": "87474A560B63F17D8A105B7D26CF31EA895C291BB0778A07685E57B1361985536B845A9CFD0105BDFD55CB934C3237A10C4EE4AD4693C419BCA8660A0E94C4AA",
+    "sha512sum": "ADD12BED848128D1CCCE577504AA3985439E591C94B080C4BF19067C78ED254ED48ACF24B49A6647B85CC31C61583EED9B98D842BECC8445D58EF89B79E6F001",
     "version": "0.0.3",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-chopper-0.0.3.jar?raw=true",
     "requires": "^1.0.0"

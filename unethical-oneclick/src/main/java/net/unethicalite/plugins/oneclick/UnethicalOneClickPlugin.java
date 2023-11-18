@@ -234,6 +234,7 @@ public class UnethicalOneClickPlugin extends Plugin
 			return target.getMenu(0, MenuAction.WIDGET_TARGET_ON_GAME_OBJECT.getId()).toEntry(client, 0)
 					.setOption(ONECLICK_MENUOPTION_PREFIX + item.getName() + " ->")
 					.setTarget(((TileObject) target).getName())
+					.item.useOn(target)
 					.onClick(x -> item.use());
 		}
 
