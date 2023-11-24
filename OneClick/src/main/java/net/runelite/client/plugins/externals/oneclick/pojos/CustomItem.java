@@ -25,7 +25,7 @@ public class CustomItem
 
 	public String getTargetString()
 	{
-		return "<col=ff9040>" + this.getOnThisName() + "</col><col=ffffff> -> <col=ff9040>" + this.getUseThisName() + "</col>";
+		return "<col=ff9040>" + this.getUseThisName() + "</col><col=ffffff> -> <col=ff9040>" + this.getOnThisName() + "</col>";
 	}
 
 	public static CustomItem from(Client client, String s)

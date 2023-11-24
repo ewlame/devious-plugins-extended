@@ -36,7 +36,7 @@ public class CustomInventory extends Clickable
 		{
 			return false;
 		}
-		return updateSelectedItem(currentItemTarget.getUseThisId());
+		return updateSelectedItem(currentItemTarget.getOnThisId());
 	}
 
 	private boolean isValid(String target)
@@ -44,7 +44,7 @@ public class CustomInventory extends Clickable
 		currentItemTarget = plugin.getItems()
 			.stream()
 			.filter(item -> item.getUseThisName().equalsIgnoreCase(Text.removeTags(target)))
-			.filter(item -> findItem(item.getOnThisId()) != null && findItem(item.getUseThisId()) != null)
+			.filter(item -> findItem(item.getUseThisId()) != null && findItem(item.getOnThisId()) != null)
 			.findFirst()
 			.orElse(null);
 		return currentItemTarget != null;

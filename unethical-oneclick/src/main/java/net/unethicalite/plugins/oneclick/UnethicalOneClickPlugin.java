@@ -119,7 +119,7 @@ public class UnethicalOneClickPlugin extends Plugin
 
 		if (!groundItemConfigs.isEmpty() && GROUND_ITEM_OPCODES.contains(opcode))
 		{
-			Tile tile = client.getScene().getTiles()[client.getPlane()][e.getActionParam0()][e.getActionParam1()];
+			Tile tile = client.getScene().getTiles()[client.getPlane()][e.getActionParam1()][e.getActionParam0()];
 			TileItem item = TileItems.getFirstAt(tile, e.getIdentifier());
 			MenuEntry replaced = replace(groundItemConfigs, item);
 			if (replaced != null)

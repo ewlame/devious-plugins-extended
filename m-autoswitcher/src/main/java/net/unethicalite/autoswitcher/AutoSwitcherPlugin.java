@@ -100,6 +100,7 @@ public class AutoSwitcherPlugin extends Plugin implements net.runelite.client.in
                       .stream()
                       .forEach(i -> i.interact(x -> x != null && (x.toLowerCase().contains("wear")
                               || x.toLowerCase().contains("wield")
+                              || x.toLowerCase().contains("use")
                               || x.toLowerCase().contains("equip"))));
             });
         }

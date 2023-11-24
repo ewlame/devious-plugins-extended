@@ -11,16 +11,16 @@ import net.runelite.client.plugins.externals.oneclick.config.Custom;
 import net.runelite.client.plugins.externals.oneclick.config.Minigame;
 import net.runelite.client.plugins.externals.oneclick.config.Skilling;
 
-@ConfigGroup("oneclick")
+@ConfigGroup("oneclicker")
 public interface OneClickConfig extends Config
 {
 	@ConfigSection(
 		position = 0,
-		keyName = "oneClickConfig",
+		keyName = "oneClickConfigs",
 		name = "One Click Config",
 		description = ""
 	)
-	String oneClickConfig = "One Click Config";
+	String oneClickConfig = "One Click Configs";
 
 	@ConfigItem(
 		position = 0,

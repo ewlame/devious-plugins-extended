@@ -5,7 +5,7 @@
   "description": "Trains fishing using aerial fishing",
   "id": "hootaerialfishing-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "6CA84A275C668809B80F153D962CC6F4AF7CCA342C36E5EF9E4CB1328A42D2109085BC5E5F8949F2AB06228C1234583B79E3CC1C133B829DC735CCC3654B53E2",
     "version": "0.0.5",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/hoot-aerialfishing-0.0.5.jar?raw=true",
@@ -18,7 +18,7 @@
   "description": "Trains thieving using blackjacking",
   "id": "hootblackjack-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "76724BCB4B816112BB038AB0D8D5F51D0D87CAC41D0E30A44828162D3E6AEE9C50429EF7AC273674AF38B1B2CEDED3E5953B428CA7608A90D2C44FDD23796F71",
     "version": "0.0.6",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/hoot-blackjack-0.0.6.jar?raw=true",
@@ -31,7 +31,7 @@
   "description": "Fishes karambwans",
   "id": "hootkarambwanfisher-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "2FFB0C12A1668F6FDE2F01C2FF2B9F09ACD3F6D86E18D2BEA5F4CA1F5751CDCE42EA1143B3B7D411DD36A72F6B8AFF1422D24E73FCBC0BFD3960FE53EFA7A87C",
     "version": "0.0.1",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/hoot-karambwanfisher-0.0.1.jar?raw=true",
@@ -44,23 +44,10 @@
   "description": "Notifies you for certain events in the game",
   "id": "hootnotifier-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "1933256CB7368FC90ABCE7F6442AB82A2444568E0C9704B0B6168E6AF1B753E5F21662CC1BB4A623EAC73376AA70603A33268E117ED7B338BB63712DCFFF183C",
     "version": "0.0.3",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/hoot-notifier-0.0.3.jar?raw=true",
-    "requires": "^1.0.0"
-  }]
-}, {
-  "projectUrl": "",
-  "provider": "melxin",
-  "name": "Hoot Tempoross fasha",
-  "description": "Completes Tempoross",
-  "id": "hoottemporossfasha-plugin",
-  "releases": [{
-    "date": "2023-11-18",
-    "sha512sum": "562C49BABEB69D1565D65B7200DAEC4D6625E6E0615388D4F31606D8D2E81C607218E4A5315FB9CD4FE61FE9562EAB21DBBA5C19561729F6F231C90868B20AC3",
-    "version": "0.0.9",
-    "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/hoot-tempoross-0.0.9.jar?raw=true",
     "requires": "^1.0.0"
   }]
 }, {
@@ -70,7 +57,7 @@
   "description": "Completes the Fishing Trawler",
   "id": "hoottrawler-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "0A1CF297361C9A95626D03586F54366A688847B0C32AFAB044C11F9AF80B231FDD4E733A25A4DBA44A98F08CDC8E1EA257CE29D51819AEAD8A6C50FCACDEC648",
     "version": "0.0.5",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/hoot-trawler-0.0.5.jar?raw=true",
@@ -83,8 +70,8 @@
   "description": "Auto switch gear by pressing hot key",
   "id": "mautoswitcher-plugin",
   "releases": [{
-    "date": "2023-11-18",
-    "sha512sum": "54E7D69AF7AB3DB57FCC62156B5E271A2EC484FEE0D254577E5A105DCBC8AA713259BC52E4539DFD8167C6A882736EFE1593BF1F7D194FDA7C7AF76C430A0A4E",
+    "date": "2023-11-24",
+    "sha512sum": "12E75D62CF7705DADF5FE364068E1495FC25EFBEA1CBAA12BB0B90C7E4D88024C2DD1B49EEF14F9D4C589B8D62B3233D2F6184EAB2D2DC6B7E518458EF09380D",
     "version": "0.0.1",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/m-autoswitcher-0.0.1.jar?raw=true",
     "requires": "^1.0.0"
@@ -96,7 +83,7 @@
   "description": "Power fish",
   "id": "mpowerfisher-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "FF211F19E22A5E348224720D5E569018ACB97254091ABE5869DE4737A7DABF5D6E37C52B34861DD92F17E5413D942245B1F38F22430A6E2E1C5711419C4F44D0",
     "version": "0.0.2",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/m-powerfisher-0.0.2.jar?raw=true",
@@ -109,7 +96,7 @@
   "description": "does wintertodt",
   "id": "mwintertodt-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "10D1A9755453FCD0D6B73C5ED0E88B78A1270CA885D3CAC430EBBD8F97A60A4309A90613C8058A01F16DC7FBC01CBD47ED611322F17B7CFF7228E1F69011EED3",
     "version": "0.0.4",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/m-wintertodt-0.0.4.jar?raw=true",
@@ -122,10 +109,23 @@
   "description": "OP One Click methods.",
   "id": "oneclick-plugin",
   "releases": [{
-    "date": "2023-11-18",
-    "sha512sum": "C99A5CCC183B744B1434B9C1EA48F9135B0DEA1E4660F7E10C26B72972F2091BB277B467B1D3505AFD400A5EC2DBB40C312CDD2DA3824E69C1686266CE99D498",
+    "date": "2023-11-24",
+    "sha512sum": "3EA28CFC898E7F27E4A0406A416D33258C3B52F32AFD4F7E75F768412E959DB604378AD136B01C585D3A9E0953DC724EFDEE58D4FF10569709D1C419A3251B5F",
     "version": "9.1.0",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/OneClick-9.1.0.jar?raw=true",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "",
+  "provider": "melxin",
+  "name": "One Click Customer",
+  "description": "1. Custom one click by ID for gameObject/NPC/Ground items/Fishing spots",
+  "id": "oneclickcustomer-plugin",
+  "releases": [{
+    "date": "2023-11-24",
+    "sha512sum": "353FFBAA4235BCE94FFDDA836B15B226848E02FADB1381B0DB97D1DC583054B5AE7B3E9001C85EB2FD41510CBB8CC1C83ACAF0E63D84539D1568DB4FB6B21FB3",
+    "version": "2.3.3",
+    "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/oneclickcustom-2.3.3.jar?raw=true",
     "requires": "^1.0.0"
   }]
 }, {
@@ -135,7 +135,7 @@
   "description": "Completes Rooftop agility courses",
   "id": "unethicalagility-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "71EF397D8BB0355A94C811437A13DE2AB07CEE56C3E6515B9F802F1374C86882F646891C951F4BF870B25C33D07018B9E26229C12462DB06EBF32181D0847662",
     "version": "0.0.8",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-agility-0.0.8.jar?raw=true",
@@ -148,7 +148,7 @@
   "description": "Automatically logs in specified account in config",
   "id": "unethicalautologin-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "CCF20850E462353B5B0FE6041BFB9623C815101D76F038D5F08C31E0A965D4534241D58CF1901858ED0BDEB33EDD7FD1CBBF60490F81E6DD6A1FA6282F7A8835",
     "version": "0.0.3",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-autologin-0.0.3.jar?raw=true",
@@ -161,7 +161,7 @@
   "description": "Enters your bank pin unethically",
   "id": "unethicalbankpin-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "1F3CADED03B311D490C5677E19F66067F5F698A3E742E13F996AA996C10BEE76672DEB0B920EB15E00FDCE0E76DD2FADE375614B2FCC42660428A5169D073F6E",
     "version": "0.0.1",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-bankpin-0.0.1.jar?raw=true",
@@ -174,7 +174,7 @@
   "description": "Does birdhouse runs",
   "id": "unethicalbirdhouses-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "47B4CE4437372DFFE537024A874340EAA43EA9F065717B3D9A027D65F2DE5432E4EF37F91449CD6320750717FA540A7ED399D3544E8C7BE1878CED6B714A6B0D",
     "version": "0.0.6",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-birdhouses-0.0.6.jar?raw=true",
@@ -187,7 +187,7 @@
   "description": "One-Clicks construction butler dialogs",
   "id": "unethicalbutler-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "0C0A95559AD827AB3349426327C172765B16D1C2FD748F58A67BA50CCD635A761894A738DBB6022FC46E5CC35B1FBACD48C14BDEA6061FA82AC97C547546CC23",
     "version": "0.0.1",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-butler-0.0.1.jar?raw=true",
@@ -200,7 +200,7 @@
   "description": "Chops trees w/ forestry patch",
   "id": "unethicalchopper-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "ADD12BED848128D1CCCE577504AA3985439E591C94B080C4BF19067C78ED254ED48ACF24B49A6647B85CC31C61583EED9B98D842BECC8445D58EF89B79E6F001",
     "version": "0.0.3",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-chopper-0.0.3.jar?raw=true",
@@ -213,7 +213,7 @@
   "description": "Cooks food on a fire or range",
   "id": "unethicalcooker-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "B8F6530B422111D4DB0CA93BF23B7E3A5FDEBCB5E90CF7E2374F829979B16BF5694137FF4E20C61CDF098CA62FD9B8D899BA35D587721A7EBBD190406987BA7F",
     "version": "0.0.3",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-cooker-0.0.3.jar?raw=true",
@@ -226,7 +226,7 @@
   "description": "Automatically walks places",
   "id": "unethicalexplorer-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "09C77C929CBD7A2C6FC93E9B9D6237E4FB40180F53D6DAB85F55647E3C469133F4BF9E7E52B8C36BA9F81B1DAB0D45897B586EC34857A6CA386C7F3328DDB955",
     "version": "0.0.5",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-explorer-0.0.5.jar?raw=true",
@@ -239,7 +239,7 @@
   "description": "Simple fighter, supports eating, looting, alching, prayer potions, prayer flicking",
   "id": "unethicalfighter-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "D1DBAEA265BD844273D11D5DB3A7502AA9654BD95E933FDEFAB2B190CE33427E44933EE9864594248055338B8DFB461E23DFD49342276ACADEE6FA88AC2DFD21",
     "version": "0.0.7",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-fighter-0.0.7.jar?raw=true",
@@ -252,7 +252,7 @@
   "description": "Buys kebabs very quickly",
   "id": "unethicalkebabbuyer-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "E919962C24B451727BD772920989D6342D0184EC134CB815FC130A9FE0A7C783E723160C3E1F743F0900B21C451BC8C46461D9C1B34A5B4C06A96AD5D432C368",
     "version": "0.0.1",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-kebab-buyer-0.0.1.jar?raw=true",
@@ -265,7 +265,7 @@
   "description": "Logs you out if a pker is near",
   "id": "unethicallogout-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "6E8A539B637CDFAFABEB1F4A4E5CD8ED090159A2C910FBB7967C8BB374722DF5B52AB99AD4BA036DC0E4B3E9F482411CCE16B0D1F93B596474CD4E663777E6DF",
     "version": "0.0.1",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-logout-0.0.1.jar?raw=true",
@@ -278,8 +278,8 @@
   "description": "Allows you to One-Click interactions",
   "id": "unethicaloneclick-plugin",
   "releases": [{
-    "date": "2023-11-18",
-    "sha512sum": "C3AF4820F034BB713E24DA0CA44926016AA007A44F50ECAA42F0EE8454D66C27DD56CA05095EF52043B8499620FE74D002CAB016D929252F2869AF926986173E",
+    "date": "2023-11-24",
+    "sha512sum": "B47178681A7C3E2A7A4D7CB21B6D11C5441552CB72DD6710CF6CC6C9D35D2E0B34A164A9875CDCBFB05E475EF1DAA4018BE4CC82ED2C64BE70D833C5F48EB339",
     "version": "0.0.1",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-oneclick-0.0.1.jar?raw=true",
     "requires": "^1.0.0"
@@ -291,7 +291,7 @@
   "description": "Configurable pickpocketer",
   "id": "unethicalpickpocket-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "2CEF3D0CFCED7ED2F4B22B82018E6A8703A1372B73FB5EA07D88143FDF6E8052CEB8D9BF9FCBDA5C8619ABE95A3CA5D7E4C253FDF36B480D812FE60C3BC45CF7",
     "version": "0.0.6",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-pickpocket-0.0.6.jar?raw=true",
@@ -304,23 +304,10 @@
   "description": "Toggles protection prayers on certain events",
   "id": "unethicalprayer-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "FD9712EA20B4BF5945C25B3BD6BE57D19B24200389F93097277ECBA0D0CBECD076AD40E93E3318F29FD1E192A0B62C8B8ED5DEECDEEBB33B59B9C6BA6A8001E5",
     "version": "0.0.6",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-prayer-0.0.6.jar?raw=true",
-    "requires": "^1.0.0"
-  }]
-}, {
-  "projectUrl": "",
-  "provider": "melxin",
-  "name": "Unethical Tempoross Fix",
-  "description": "Completes Fixed Tempeross",
-  "id": "unethicaltemporossfix-plugin",
-  "releases": [{
-    "date": "2023-11-18",
-    "sha512sum": "D34FFA48031940C7A639A35EA930D6ABCC180E8CD2AF3D63D9314E6BC74F89A030A4FDC4F9E56FF3A445605C148648D2E906FC342B5C932FB5F945888BCE0DF4",
-    "version": "0.0.3",
-    "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-tempoross-0.0.3.jar?raw=true",
     "requires": "^1.0.0"
   }]
 }, {
@@ -330,7 +317,7 @@
   "description": "Kills Zulrah for you",
   "id": "unethicalzulrah-plugin",
   "releases": [{
-    "date": "2023-11-18",
+    "date": "2023-11-24",
     "sha512sum": "2F495B07D2B996CF14D92FEA396AC5F76E2D1FE9A4B0FB72181AD98AFB4D1D5B0F219A28A511F81C831D1A12809E348CAA70B48049392EF0F9EBAF28E53C966A",
     "version": "0.0.2",
     "url": "https://github.com/melxin/devious-plugins-extended/blob/master/release/unethical-zulrah-0.0.2.jar?raw=true",
